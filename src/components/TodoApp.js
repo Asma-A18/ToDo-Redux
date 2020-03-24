@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import AddTodo from './AddTodo'
-import TodoList from './TodoList'
 import {editTodo,deleteTodo, toggle } from '../actions/actionCreators';
 
 
@@ -11,6 +10,7 @@ class TodoApp extends Component {
     state={
         edit:false,
         text:"",
+
     }
  
     editTodo=(id,edit_text)=>{
@@ -32,10 +32,10 @@ class TodoApp extends Component {
            }
       
          
-       editstate=(index)=>{
+       editstate=(id)=>{
          this.setState({
-             edit:true, 
-             text:this.props.todos.text
+             edit:id, 
+             text:this.props.text
     
         })
        }
@@ -49,7 +49,7 @@ class TodoApp extends Component {
             <AddTodo/>
                 {this.props.todos.map(el =>
                   <div>
-                  { this.state.edit=== false?
+                  { this.state.edit!== el.id?
                     
                        <div>
 
@@ -57,7 +57,7 @@ class TodoApp extends Component {
         
                         <button onClick={()=> this.props.deleteTodo(el.id)} className='delete-btn'> delete</button>               
         
-                     <button onClick={(id)=>this.editstate(id)} className='done-btn'>edit</button>
+                     <button onClick={()=>this.editstate(el.id)} className='done-btn'>edit</button>
                      <button onClick={(id)=>this.toggle(el.id)} className='done-btn'> {el.completed ? "Undo": "Completed"}</button>
         
                      </div>
